@@ -1,0 +1,59 @@
+#include <stdio.h>
+#include <cs50.h>
+#include <ctype.h>
+#include <string.h>
+#include <math.h>
+
+int main(void)
+{
+    //get the text from the user
+    string text = get_string("Text: ");
+    
+    //initialize the variables that are going to be used
+    float numLetters = 0;
+    float numWords = 1;
+    float numSentences = 0;
+    
+    //goes through the text character by character
+    for (int i = 0; i < strlen(text); i++)
+    {
+        if (isalpha(text[i]))
+        {
+            numLetters++;
+        }
+        
+        else if (isspace(text[i]))
+        {
+            numWords++;
+        }
+        
+        else if (text[i] == '.' || text[i] == '!' || text[i] == '?')
+        {
+            numSentences++;
+        }
+    }
+    
+    
+    //analyzing the variables 
+    float S = (numSentences * 100) / numWords; //average number of sentences every 100 words
+    float L = (numLetters * 100) / numWords; //average number of letters every 100 words
+    int gradeLevel = round(0.0588 * L - 0.296 * S - 15.8); //Coleman-Liau index
+    
+    
+    //output the grade level of text to user
+    if (gradeLevel < 1)
+    {
+        printf("Before Grade 1\n");
+    }
+    
+    else if (gradeLevel > 16)
+    {
+        printf("Grade 16+\n");
+    }
+    
+    else
+    {
+        printf("Grade %i\n", gradeLevel);
+    }
+
+}
